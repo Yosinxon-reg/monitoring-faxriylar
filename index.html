@@ -1,0 +1,85 @@
+<!doctype html><html lang="uz"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Monitoring bölimi — Faxriylar</title>
+<meta name="theme-color" content="#1B2340">
+<style>
+@font-face{font-family:M;src:url(Montserrat-Medium.ttf);font-weight:500}
+@font-face{font-family:M;src:url(Montserrat-SemiBold.ttf);font-weight:600}
+@font-face{font-family:M;src:url(Montserrat-Bold.ttf);font-weight:700}
+@font-face{font-family:M;src:url(Montserrat-ExtraBold.ttf);font-weight:800}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#0B1028}
+body{font-family:M,system-ui,sans-serif;color:#fff;min-height:100vh;
+     background:radial-gradient(120% 60% at 50% 0%,#2E4596 0%,#1B2340 50%,#0B1028 100%) fixed;-webkit-font-smoothing:antialiased}
+.wrap{max-width:560px;margin:0 auto;padding:28px 16px 60px}
+.top{text-align:center;opacity:.9}
+.top svg{width:56px}
+.top .t1{font:700 12px/1 M;letter-spacing:.12em;margin-top:10px}
+.top .t2{font:600 10.5px/1 M;letter-spacing:.38em;color:#C9D3EE;margin-top:10px}
+.badge{display:inline-block;margin:30px auto 0;padding:9px 18px;border-radius:40px;font:800 13px/1 M;letter-spacing:.2em;color:#1B2340}
+h1{font:800 34px/1.12 M;margin-top:18px}
+.dep{font:600 12px/1.3 M;letter-spacing:.2em;margin-top:12px;opacity:.9}
+.card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:18px;margin-top:22px;backdrop-filter:blur(6px)}
+video{width:100%;border-radius:14px;display:block;background:#0B1028;aspect-ratio:9/16;max-height:78vh;object-fit:contain}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:58px;border-radius:14px;border:0;
+     font:800 16px/1 M;color:#1B2340;margin-top:14px;cursor:pointer;text-decoration:none}
+.btn2{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);height:50px;font-size:14px}
+.cert{width:100%;border-radius:10px;display:block;box-shadow:0 14px 40px rgba(0,0,0,.4)}
+.lbl{font:700 11px/1 M;letter-spacing:.32em;margin-bottom:14px}
+.txt{font:500 16px/1.65 M;color:#EEF1FB}
+.meta{text-align:center;font:600 11px/1.6 M;letter-spacing:.2em;color:#9FB0DA;margin-top:30px}
+.list a{display:flex;align-items:center;gap:14px;padding:14px;border-radius:14px;background:rgba(255,255,255,.06);margin-top:10px;color:#fff;text-decoration:none}
+.list .d{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:800 15px/1 M;color:#1B2340;flex:none}
+.list b{font:700 15px/1.3 M;display:block}.list small{font:500 11.5px/1.3 M;opacity:.75}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#fff;color:#1B2340;padding:12px 18px;border-radius:12px;
+       font:700 13px/1.3 M;opacity:0;transition:.3s;pointer-events:none;max-width:90vw;text-align:center}
+.hint{font:500 12.5px/1.5 M;color:#C9D3EE;margin-top:10px;text-align:center}
+</style></head><body><div class="wrap" id="app"></div><div id="toast"></div>
+<script>
+const LEAF = "M 241.05 0.00 C 239.34 1.53 225.60 12.71 188.14 12.71 C 141.21 12.71 113.78 22.75 111.07 91.72 L 110.82 91.72 C 109.68 68.68 101.39 19.58 51.26 19.58 C 24.45 19.58 8.99 30.80 0.10 44.79 C 0.04 44.89 0.00 45.01 0.00 45.13 L 0.00 86.09 C 0.00 86.22 0.14 86.30 0.25 86.23 C 9.09 80.21 24.21 74.32 49.70 74.32 C 100.52 74.32 108.95 98.88 110.73 103.14 L 110.90 103.14 C 111.77 100.02 121.57 69.93 176.80 69.93 C 234.91 69.93 241.21 37.62 241.24 0.11 C 241.15 0.06 241.15 0.05 241.05 0.00 Z M 0.16 118.87 C 0.07 118.87 0.00 118.95 0.00 119.03 L 0.00 171.97 C 0.00 172.06 0.07 172.14 0.16 172.14 L 221.83 172.14 C 221.92 172.14 221.99 172.06 221.99 171.97 L 221.99 119.03 C 221.99 118.95 221.92 118.87 221.83 118.87 Z";
+const DATA = [{"id": "MB-0001", "ism": "Rustamov Abbos", "bolim": "Intizomiy monitoring bölimi", "tier": "oltin", "lab": "1-ÖRIN", "m1": "#FBE08A", "m2": "#E2A512", "m3": "#9C6A00", "matn": "2-bosqiç KPI natijalariga köra Intizomiy monitoring bölimida 1-örinni egallagani, filiallarda intizom nazoratini yuqori masʼuliyat va aniqlik bilan olib borgani uçun taqdirlanadi.", "tabrik": "Monitoring bölimi Rustamov Abbosga 2-bosqiçda erişilgan yuqori natija uçun samimiy minnatdorçilik bildiradi. Filiallardagi holatni öz vaqtida, xolis va aniq qayd etiş, belgilangan vazifalarni töliq bajariş bölim faoliyati samaradorligini oşirişga xizmat qildi. Kelgusi faoliyatda yangi yutuqlar tilaymiz."}, {"id": "MB-0002", "ism": "Qosimova Nodira", "bolim": "Intizomiy monitoring bölimi", "tier": "kumush", "lab": "2-ÖRIN", "m1": "#F4F6FA", "m2": "#B0B8C7", "m3": "#5B6475", "matn": "2-bosqiç KPI natijalariga köra Intizomiy monitoring bölimida 2-örinni egallagani, belgilangan vazifalarni barqaror va sifatli bajargani uçun taqdirlanadi.", "tabrik": "Monitoring bölimi Qosimova Nodiraga 2-bosqiçdagi barqaror va yuqori natija uçun minnatdorçilik bildiradi. Vazifalarga jiddiy yondaşuv, kuzatuvlardagi diqqat va har bir masalani oxirigaça yetkaziş bölim işining sifatini taʼminlamoqda. Kelgusi bosqiçlarda yanada yuqori natijalar tilaymiz."}, {"id": "MB-0003", "ism": "Fayziyeva Diyora", "bolim": "Akademik monitoring bölimi", "tier": "oltin", "lab": "1-ÖRIN", "m1": "#FBE08A", "m2": "#E2A512", "m3": "#9C6A00", "matn": "2-bosqiç KPI natijalariga köra Akademik monitoring bölimida 1-örinni egallagani, darslarni kuzatiş va tahlil qilişdagi yuqori kasbiy mahorati uçun taqdirlanadi.", "tabrik": "Monitoring bölimi Fayziyeva Diyoraga 2-bosqiçning eng yuqori natijasi uçun samimiy minnatdorçilik bildiradi. Darslarni puxta kuzatiş, aniq tahlil va öqituvçilarga berilgan asosli tavsiyalar taʼlim sifatini oşirişga bevosita hissa qöşdi. Ushbu natija bölim xodimlari uçun namuna bölib xizmat qiladi."}, {"id": "MB-0004", "ism": "Jörayev Xasanboy", "bolim": "Akademik monitoring bölimi", "tier": "kumush", "lab": "2-ÖRIN", "m1": "#F4F6FA", "m2": "#B0B8C7", "m3": "#5B6475", "matn": "2-bosqiç KPI natijalariga köra Akademik monitoring bölimida 2-örinni egallagani, reja asosida izçil işlagani va kuzatuvlarni sifatli olib borgani uçun taqdirlanadi.", "tabrik": "Monitoring bölimi Jörayev Xasanboyga 2-bosqiçda körsatilgan yuqori natija uçun minnatdorçilik bildiradi. Rejaning öz vaqtida bajarilişi va har bir kuzatuvga masʼuliyatli yondaşuv bölim faoliyatining barqarorligini taʼminladi. Kelgusi faoliyatda yangi muvaffaqiyatlar tilaymiz."}, {"id": "MB-0005", "ism": "Salohiddinova Ominaxon", "bolim": "Monitoring bölimi", "tier": "zumrad", "lab": "IJOBIY FAOLIYAT", "m1": "#7FD8BF", "m2": "#13896F", "m3": "#0A4E40", "matn": "Monitoring bölimidagi faoliyatida yuksak masʼuliyat namunasini körsatgani va bölim işiga qöşgan ijobiy hissasi uçun taqdirlanadi.", "tabrik": "Monitoring bölimi Salohiddinova Ominaxonga vazifalarga masʼuliyatli yondaşuvi va bölim faoliyatiga qöşgan ijobiy hissasi uçun samimiy minnatdorçilik bildiradi. Belgilangan işlarni sidqidildan va sifatli bajariş bölimning umumiy natijalarini mustahkamlaşga xizmat qilmoqda. Kelgusi faoliyatda yangi muvaffaqiyatlar tilaymiz."}, {"id": "MB-0006", "ism": "Ikromova Habibaxon", "bolim": "Monitoring bölimi", "tier": "zumrad", "lab": "IJOBIY FAOLIYAT", "m1": "#7FD8BF", "m2": "#13896F", "m3": "#0A4E40", "matn": "Monitoring bölimidagi faoliyatida yuksak masʼuliyat namunasini körsatgani va bölim işiga qöşgan ijobiy hissasi uçun taqdirlanadi.", "tabrik": "Monitoring bölimi Ikromova Habibaxonga zimmasidagi vazifalarni masʼuliyat bilan bajargani va bölim faoliyatiga qöşgan ijobiy hissasi uçun minnatdorçilik bildiradi. Işga bölgan sadoqat va izçillik jamoa samaradorligini oşirişga munosib hissa qöşmoqda. Kelgusi işlaringizda yangi yutuqlar tilaymiz."}];
+const $ = s => document.querySelector(s);
+const toast = m => { const t = $('#toast'); t.textContent = m; t.style.opacity = 1; setTimeout(() => t.style.opacity = 0, 3200); };
+const TOP = `<div class="top"><svg viewBox="0 0 241.24 172.14"><path fill="#fff" d="${LEAF}"/></svg>
+  <div class="t1">REGISTAN SCHOOL</div><div class="t2">MONITORING BÖLIMI</div></div>`;
+const id = (new URLSearchParams(location.search).get('id') || '').toUpperCase();
+const c = DATA.find(x => x.id === id);
+const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+if (!c) {
+  $('#app').innerHTML = TOP + `<h1 style="text-align:center;font-size:26px;margin-top:34px">Faxriylar</h1>
+   <div class="hint" style="margin-bottom:14px">2-bosqiç · 25.11.2026</div>
+   <div class="list">${DATA.map(x => `<a href="?id=${x.id}"><span class="d" style="background:linear-gradient(135deg,${x.m1},${x.m2})">${x.tier==='oltin'?'1':x.tier==='kumush'?'2':'★'}</span>
+     <span><b>${x.ism}</b><small>${x.lab} · ${x.bolim}</small></span></a>`).join('')}</div>`;
+} else {
+  document.title = c.ism + ' — Taşakkurnoma';
+  document.body.style.background = `radial-gradient(120% 55% at 50% 0%, ${c.m3}aa 0%, #1B2340 45%, #0B1028 100%) fixed`;
+  const g = `linear-gradient(135deg,${c.m1},${c.m2})`;
+  $('#app').innerHTML = TOP + `<div style="text-align:center">
+     <div class="badge" style="background:${g}">${c.tier==='zumrad'?'★ ':'🏅 '}${c.lab}</div>
+     <h1>${c.ism}</h1><div class="dep" style="color:${c.m1}">${c.bolim.toUpperCase()}</div></div>
+   <div class="card"><video id="v" src="v/${c.id}.mp4" poster="c/${c.id}.jpg" controls playsinline preload="metadata"></video>
+     <button class="btn" id="sv" style="background:${g}">📲 Videoni galereyaga saqlaş</button>
+     <div class="hint" id="hint"></div></div>
+   <div class="card"><div class="lbl" style="color:${c.m1}">TABRIKLAYMIZ</div><div class="txt">${c.tabrik}</div></div>
+   <div class="card"><div class="lbl" style="color:${c.m1}">TAŞAKKURNOMA · № ${c.id}</div>
+     <img class="cert" src="c/${c.id}.jpg" alt="Taşakkurnoma">
+     <a class="btn btn2" href="c/${c.id}.jpg" download="Tashakkurnoma-${c.id}.jpg">🖼 Taşakkurnomani yuklab oliş</a></div>
+   <div class="meta">MONITORING BÖLIMI · 25.11.2026<br>№ ${c.id} — haqiqiy hujjat</div>`;
+  $('#hint').textContent = isIOS ? 'Tugmani bosing va oçilgan oynada «Videoni saqlaş» (Save Video) ni tanlang.' : 'Tugmani bosing — video telefoningizga saqlanadi.';
+  $('#sv').onclick = async () => {
+    const b = $('#sv'); const old = b.textContent; b.textContent = '⏳ Yuklanmoqda…'; b.disabled = true;
+    try {
+      const blob = await (await fetch(`v/${c.id}.mp4`)).blob();
+      const file = new File([blob], `Tabrik-${c.id}.mp4`, {type: 'video/mp4'});
+      if (navigator.canShare && navigator.canShare({files: [file]}) && (isIOS || !/Android/i.test(navigator.userAgent))) {
+        try { await navigator.share({files: [file]}); } catch (e) {}
+      } else {
+        const u = URL.createObjectURL(blob), a = document.createElement('a'); a.href = u; a.download = file.name;
+        document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 60000);
+        toast('✅ Video saqlandi — galereyani oçing');
+      }
+    } catch (e) { location.href = `v/${c.id}.mp4`; }
+    b.textContent = old; b.disabled = false;
+  };
+}
+</script></body></html>
