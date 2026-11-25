@@ -57,19 +57,19 @@ if (!c) {
   $('#app').innerHTML = TOP + `<div style="text-align:center">
      <div class="badge" style="background:${g}">${c.tier==='zumrad'?'★ ':'🏅 '}${c.lab}</div>
      <h1>${c.ism}</h1><div class="dep" style="color:${c.m1}">${c.bolim.toUpperCase()}</div></div>
-   <div class="card"><video id="v" src="v/${c.id}.mp4" poster="c/${c.id}.jpg" controls playsinline preload="metadata"></video>
+   <div class="card"><video id="v" src="${c.id}.mp4" poster="${c.id}.jpg" controls playsinline preload="metadata"></video>
      <button class="btn" id="sv" style="background:${g}">📲 Videoni galereyaga saqlaş</button>
      <div class="hint" id="hint"></div></div>
    <div class="card"><div class="lbl" style="color:${c.m1}">TABRIKLAYMIZ</div><div class="txt">${c.tabrik}</div></div>
    <div class="card"><div class="lbl" style="color:${c.m1}">TAŞAKKURNOMA · № ${c.id}</div>
-     <img class="cert" src="c/${c.id}.jpg" alt="Taşakkurnoma">
-     <a class="btn btn2" href="c/${c.id}.jpg" download="Tashakkurnoma-${c.id}.jpg">🖼 Taşakkurnomani yuklab oliş</a></div>
+     <img class="cert" src="${c.id}.jpg" alt="Taşakkurnoma">
+     <a class="btn btn2" href="${c.id}.jpg" download="Tashakkurnoma-${c.id}.jpg">🖼 Taşakkurnomani yuklab oliş</a></div>
    <div class="meta">MONITORING BÖLIMI · 25.11.2026<br>№ ${c.id} — haqiqiy hujjat</div>`;
   $('#hint').textContent = isIOS ? 'Tugmani bosing va oçilgan oynada «Videoni saqlaş» (Save Video) ni tanlang.' : 'Tugmani bosing — video telefoningizga saqlanadi.';
   $('#sv').onclick = async () => {
     const b = $('#sv'); const old = b.textContent; b.textContent = '⏳ Yuklanmoqda…'; b.disabled = true;
     try {
-      const blob = await (await fetch(`v/${c.id}.mp4`)).blob();
+      const blob = await (await fetch(`${c.id}.mp4`)).blob();
       const file = new File([blob], `Tabrik-${c.id}.mp4`, {type: 'video/mp4'});
       if (navigator.canShare && navigator.canShare({files: [file]}) && (isIOS || !/Android/i.test(navigator.userAgent))) {
         try { await navigator.share({files: [file]}); } catch (e) {}
@@ -78,7 +78,7 @@ if (!c) {
         document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 60000);
         toast('✅ Video saqlandi — galereyani oçing');
       }
-    } catch (e) { location.href = `v/${c.id}.mp4`; }
+    } catch (e) { location.href = `${c.id}.mp4`; }
     b.textContent = old; b.disabled = false;
   };
 }
